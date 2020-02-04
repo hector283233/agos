@@ -1,0 +1,85 @@
+{% extends "base_ru.html" %}
+{% load static %}
+
+{% block title %}
+	{% for company in company_info %}
+		<img style="width: 32px" class="img-responsive img-fluid" src="{{company.company_logo.url}}" alt=""/>
+		{{company.company_name}}
+	{% endfor %}
+{% endblock title %}
+
+{% block content %}
+
+<div class="container">
+
+	<div class="col-12">
+		<h1 class="display-4 text-center text-uppercase">Деревянные Двери</h1>
+		<hr>
+	</div>
+
+
+	{% for group in groups %}
+		<div class="row">
+
+			<div class="col-12">
+				<h1 class="display-4 text-center">{{group.group_name}}</h1>
+				<hr>
+			</div>
+			
+			{% for product in productsAG %}
+				{% if group.id == product.product_group.id %}
+					<div class="col-xl-3 col-md-6 mb-4">
+
+					     <div class="card border-1 shadow">	
+					      <div class="hovereffect">
+					        <img class="img-responsive img-fluid align-middle" src="{{product.product_image.url}}" alt="">
+					      </div>
+
+					      <div class="card-body text-center">
+					          <h5 class="card-title mb-0">
+					          		{% if product.is_new == 1 %}
+					          			<span class="badge badge-success">НОВОЕ</span>
+					          		{% endif %}
+					          	{{product.product_name}}</h5>
+					      </div>
+						</div>
+
+					</div>
+				{% endif %}	
+			{% endfor %}
+		</div>
+	{% endfor %}
+</div>
+
+
+{% endblock content %}
+
+{% block footer %}
+        <div class="col-md-3">
+          <h4>
+          	{% for company in company_info %}
+				{{company.company_name}}
+			{% endfor %}
+          </h4>
+          <h5>
+          	{% for company in company_info %}
+				<img style="width: 128px" class="img-responsive img-fluid" src="{{company.company_logo.url}}" alt=""/>
+			{% endfor %}
+          </h5>
+          <button type="button" class="btn btn-info" >
+          		
+	          		<a class="text-decoration-none text-white" href="/media/test.pdf">СКАЧАТЬ КАТАЛОГ</a>
+	          	
+          </button>
+          <p><em></em></p>
+        </div>
+
+        <div class="col-md-5">
+        	{% for store in store_address %}
+	          <p><em>Адрес: {{store.address_line1}}</em></p>
+	          <p>{{store.address_line2}}</p>
+	          <p>Тел: {{store.phone1}}, {{store.phone2}}, {{store.phone3}}</p>
+	          <p>{{store.e_mail}}</p>
+          	{% endfor %}
+        </div>
+{% endblock footer %}
